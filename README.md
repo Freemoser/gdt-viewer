@@ -8,7 +8,21 @@ Einfache Website zum **Hochladen und Lesen von GDT-Dateien** (Gerätedatentransf
 - Anzeige als Tabelle (Feld-ID, Bedeutung, Inhalt)
 - Kurze Zusammenfassung (Patient, Geburtsdatum, …)
 - Rohtext optional
+- **Zufällige GDT erzeugen** in mehreren konformen Formaten (Download als `.gdt`)
 - **100 % clientseitig** – Dateien werden nicht auf einen Server geladen
+
+### Generator-Formate
+
+| Format | Beschreibung |
+|--------|--------------|
+| GDT 2.1 CRLF | Länge inkl. CR+LF, klassisch |
+| GDT 2.1 LF | Unix-Zeilenenden |
+| GDT 2.1 UTF-8 | Umlaute, Zeichensatz-Feld UTF-8 |
+| Ohne Längenpräfix | nur Feld-ID + Inhalt |
+| Mehrere Sätze | 6301 + 6310 in einer Datei |
+| Ohne Feld 8100 | ohne optionale Satzlänge |
+
+Satzarten: **6301** (Stammdaten), **6302** (Anforderung), **6310** (Ergebnisse).
 
 ## Lokal starten
 

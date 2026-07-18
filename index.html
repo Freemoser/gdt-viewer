@@ -25,6 +25,26 @@
     </header>
 
     <main>
+      <section class="generator" aria-labelledby="gen-title">
+        <div class="generator-head">
+          <h2 id="gen-title">Zufällige GDT erzeugen</h2>
+          <p class="muted">Konforme Testdateien in verschiedenen Formaten – fiktive Patientendaten</p>
+        </div>
+        <div class="generator-controls">
+          <label class="field">
+            <span>Format</span>
+            <select id="formatSelect" aria-label="GDT-Format wählen">
+              <option value="random">Zufälliges Format</option>
+            </select>
+          </label>
+          <div class="generator-actions">
+            <button type="button" class="btn btn-primary" id="generateBtn">Zufällig erzeugen</button>
+            <button type="button" class="btn btn-ghost" id="downloadGenBtn" disabled>Als .gdt speichern</button>
+          </div>
+        </div>
+        <p id="formatHint" class="format-hint muted"></p>
+      </section>
+
       <section
         id="dropzone"
         class="dropzone"
@@ -57,6 +77,7 @@
             Rohtext anzeigen
           </label>
           <button type="button" class="btn btn-ghost" id="copyBtn">Kopieren</button>
+          <button type="button" class="btn btn-ghost" id="downloadBtn">Download</button>
           <button type="button" class="btn btn-ghost" id="clearBtn">Neue Datei</button>
         </div>
       </section>
@@ -90,8 +111,9 @@
         <h2>Hinweise</h2>
         <ul>
           <li>Unterstützt typische GDT 2.x-Zeilen: <code>Länge (3) + Feld-ID (4) + Inhalt</code></li>
+          <li>Generator: Satzarten <code>6301</code>, <code>6302</code>, <code>6310</code> · Formate mit/ohne Längenpräfix, CRLF/LF, optional UTF-8</li>
           <li>Die Datei bleibt in deinem Browser – es gibt keinen Server-Upload</li>
-          <li>Patientendaten nicht unnötig teilen; die Seite ist öffentlich nutzbar</li>
+          <li>Nur Testdaten erzeugen; echte Patientendaten nicht unnötig teilen</li>
         </ul>
       </section>
     </main>
@@ -100,6 +122,7 @@
       <span>Open Source · läuft komplett im Browser</span>
     </footer>
   </div>
+  <script src="generator.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

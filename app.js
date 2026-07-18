@@ -60,10 +60,17 @@ const fileNameEl = $("fileName");
 const fileInfoEl = $("fileInfo");
 const showRaw = $("showRaw");
 const copyBtn = $("copyBtn");
+const downloadBtn = $("downloadBtn");
 const clearBtn = $("clearBtn");
+const formatSelect = $("formatSelect");
+const generateBtn = $("generateBtn");
+const downloadGenBtn = $("downloadGenBtn");
+const formatHint = $("formatHint");
 
 let lastRecords = [];
 let lastRaw = "";
+let lastFileName = "export.gdt";
+let lastGenerated = null;
 
 function showError(message) {
   errorBox.textContent = message;
@@ -179,13 +186,16 @@ function buildSummary(records) {
   ];
 }
 
-function render(records, rawContent, file) {
+function render(records, rawContent, fileMeta) {
   lastRecords = records;
   lastRaw = rawContent;
+  lastFileName = fileMeta.name || "export.gdt";
 
-  fileNameEl.textContent = file.name;
-  const kb = (file.size / 1024).toFixed(file.size < 1024 ? 2 : 1);
-  fileInfoEl.textContent = `${kb} KB · ${records.length} Felder`;
+  fileNameEl.textContent = lastFileName;
+  const size = fileMeta.size != null ? fileMeta.size : new Blob([rawContent]).size;
+  const kb = (size / 1024).toFixed(size < 1024 ? 2 : 1);
+  const extra = fileMeta.extraInfo ? ` · ${fileMeta.extraInfo}` : "";
+  fileInfoEl.textContent = `${kb} KB · ${records.length} Felder${extra}`;
 
   const cards = buildSummary(records);
   summary.innerHTML = cards
@@ -217,6 +227,70 @@ function render(records, rawContent, file) {
   results.classList.remove("hidden");
   raw.classList.toggle("hidden", !showRaw.checked);
   dropzone.classList.add("hidden");
+  if (downloadBtn) downloadBtn.disabled = false;
+}
+
+function downloadText(filename, text) {
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function initFormatSelect() {
+  if (!formatSelect || typeof listGdtFormats !== "function") return;
+  for (const fmt of listGdtFormats()) {
+    const opt = document.createElement("option");
+    opt.value = fmt.id;
+    opt.textContent = fmt.label;
+    formatSelect.appendChild(opt);
+  }
+  updateFormatHint();
+}
+
+function updateFormatHint() {
+  if (!formatHint || typeof GDT_FORMATS === "undefined") return;
+  const id = formatSelect?.value;
+  if (!id || id === "random") {
+    formatHint.textContent =
+      "Wählt zufällig eines der Formate und eine Satzart (6301 / 6302 / 6310).";
+    return;
+  }
+  const fmt = GDT_FORMATS[id];
+  formatHint.textContent = fmt ? fmt.description : "";
+}
+
+function runGenerate() {
+  clearError();
+  if (typeof generateRandomGdt !== "function") {
+    showError("Generator nicht geladen (generator.js).");
+    return;
+  }
+  try {
+    const formatId = formatSelect?.value || "random";
+    const gen = generateRandomGdt(formatId);
+    lastGenerated = gen;
+
+    const { records, raw: rawContent } = parseGdt(gen.text);
+    if (!records.length) {
+      showError("Generator lieferte keine lesbaren Felder.");
+      return;
+    }
+
+    if (downloadGenBtn) downloadGenBtn.disabled = false;
+    formatHint.textContent = `Erzeugt: ${gen.format.label} · Satzart(en) ${gen.satzarten.join(", ")} · ${gen.patient.lastName}, ${gen.patient.firstName}`;
+
+    render(records, rawContent, {
+      name: gen.fileName,
+      size: new Blob([gen.text]).size,
+      extraInfo: gen.format.id,
+    });
+  } catch (err) {
+    showError(`Generator-Fehler: ${err.message || err}`);
+  }
 }
 
 function escapeHtml(str) {
@@ -271,6 +345,8 @@ function readAsText(file, encoding) {
 function reset() {
   lastRecords = [];
   lastRaw = "";
+  lastFileName = "export.gdt";
+  lastGenerated = null;
   fileInput.value = "";
   tableBody.innerHTML = "";
   summary.innerHTML = "";
@@ -280,7 +356,10 @@ function reset() {
   results.classList.add("hidden");
   raw.classList.add("hidden");
   dropzone.classList.remove("hidden");
+  if (downloadGenBtn) downloadGenBtn.disabled = !lastGenerated;
+  if (downloadBtn) downloadBtn.disabled = true;
   clearError();
+  updateFormatHint();
 }
 
 // Events
@@ -346,6 +425,31 @@ copyBtn.addEventListener("click", async () => {
     showError("Zwischenablage nicht verfügbar.");
   }
 });
+
+if (downloadBtn) {
+  downloadBtn.disabled = true;
+  downloadBtn.addEventListener("click", () => {
+    if (!lastRaw) return;
+    downloadText(lastFileName.endsWith(".gdt") ? lastFileName : `${lastFileName}.gdt`, lastRaw);
+  });
+}
+
+if (generateBtn) {
+  generateBtn.addEventListener("click", runGenerate);
+}
+
+if (downloadGenBtn) {
+  downloadGenBtn.addEventListener("click", () => {
+    if (!lastGenerated) return;
+    downloadText(lastGenerated.fileName, lastGenerated.text);
+  });
+}
+
+if (formatSelect) {
+  formatSelect.addEventListener("change", updateFormatHint);
+}
+
+initFormatSelect();
 
 // Prevent browser from opening dropped files outside the zone
 ["dragover", "drop"].forEach((evt) => {

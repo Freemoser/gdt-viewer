@@ -105,6 +105,75 @@ h1 {
   box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.25);
 }
 
+.generator {
+  margin-bottom: 1.25rem;
+  padding: 1.1rem 1.2rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.generator-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.generator-head p {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+}
+
+.generator-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.85rem 1rem;
+  margin-top: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: min(100%, 280px);
+  flex: 1;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.field select {
+  appearance: none;
+  background: var(--bg-soft)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238b9aab' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
+    no-repeat right 0.75rem center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.55rem 2rem 0.55rem 0.75rem;
+  cursor: pointer;
+}
+
+.field select:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.generator-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.format-hint {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  min-height: 1.2em;
+}
+
 .dropzone {
   border: 2px dashed var(--border);
   border-radius: var(--radius);
