@@ -6,7 +6,8 @@
 const FIELD_LABELS = {
   "8000": "Satzidentifikation",
   "8001": "Version GDT",
-  "8100": "Satzlänge",
+  "8004": "Satzlänge (GDT 3.x)",
+  "8100": "Satzlänge (GDT 2.x)",
   "8315": "GDT-ID Empfänger",
   "8316": "GDT-ID Sender",
   "9206": "Zeichensatz",
@@ -18,21 +19,27 @@ const FIELD_LABELS = {
   "3103": "Geburtsdatum",
   "3104": "Titel",
   "3105": "Versichertennummer",
-  "3106": "Wohnort",
+  "3106": "Wohnort (PLZ + Ort)",
   "3107": "Straße",
   "3108": "Versichertenart",
   "3110": "Geschlecht",
+  "3112": "PLZ",
+  "3113": "Wohnort",
+  "3618": "Mobiltelefon",
+  "3619": "E-Mail-Adresse",
   "3622": "Größe (cm)",
   "3623": "Gewicht (kg)",
   "2002": "Tag der Erhebung",
   "2003": "Uhrzeit der Erhebung",
-  "6200": "Befund",
+  "6200": "Tag der Untersuchung",
+  "6201": "Uhrzeit der Untersuchung",
   "6220": "Ergebnis-Text / Kommentar",
   "6227": "Dateiinhalt / Anhang",
   "6302": "Dateiformat",
   "6303": "Dateiname",
   "6304": "Dateiinhaltsbeschreibung",
   "6305": "Dateigröße",
+  "8402": "Art der Untersuchung",
   "8410": "Test-Ident / Kennung",
   "8411": "Testbezeichnung",
   "8420": "Ergebnis-Wert",
@@ -171,17 +178,32 @@ function buildSummary(records) {
 
   const birth = formatDate(findField(records, "3103")) || "—";
   const sexRaw = findField(records, "3110");
-  const sexMap = { "1": "männlich", "2": "weiblich", M: "männlich", W: "weiblich", m: "männlich", w: "weiblich" };
+  const sexMap = {
+    "1": "männlich",
+    "2": "weiblich",
+    M: "männlich",
+    W: "weiblich",
+    m: "männlich",
+    w: "weiblich",
+    D: "divers",
+    X: "unbestimmt",
+    U: "unbekannt",
+  };
   const sex = (sexRaw && (sexMap[sexRaw] || sexRaw)) || "—";
-  const date = formatDate(findField(records, "2002")) || "—";
+  const date =
+    formatDate(findField(records, "6200")) ||
+    formatDate(findField(records, "2002")) ||
+    "—";
   const satz = findField(records, "8000") || "—";
+  const version = findField(records, "9218") || "—";
 
   return [
     { label: "Patient", value: patient },
     { label: "Geburtsdatum", value: birth },
     { label: "Geschlecht", value: sex },
-    { label: "Erhebungsdatum", value: date },
+    { label: "Untersuchungsdatum", value: date },
     { label: "Satzart", value: satz },
+    { label: "GDT-Version", value: version },
     { label: "Felder", value: String(records.length) },
   ];
 }

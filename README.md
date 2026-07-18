@@ -15,14 +15,17 @@ Einfache Website zum **Hochladen und Lesen von GDT-Dateien** (Gerätedatentransf
 
 | Format | Beschreibung |
 |--------|--------------|
-| GDT 2.1 CRLF | Länge inkl. CR+LF, klassisch |
-| GDT 2.1 LF | Unix-Zeilenenden |
-| GDT 2.1 UTF-8 | Umlaute, Zeichensatz-Feld UTF-8 |
+| GDT 2.1 CRLF / LF / UTF-8 | Satzlänge Feld **8100**, Version `02.10` |
+| GDT 3.0 CRLF | Satzlänge Feld **8004**, Version `03.00` |
+| GDT 3.1 CRLF / LF / UTF-8 | **8004**, `03.10`, E-Mail/Mobil, `6200` als YYYYMMDD |
+| GDT 3.1 Mehrere Sätze | 6301 + 6310 mit 3.1-Feldern |
 | Ohne Längenpräfix | nur Feld-ID + Inhalt |
-| Mehrere Sätze | 6301 + 6310 in einer Datei |
-| Ohne Feld 8100 | ohne optionale Satzlänge |
+| GDT 2.1 Mehrere Sätze | 6301 + 6310 |
+| Ohne Feld 8100 | ohne optionale Satzlänge (2.1) |
 
 Satzarten: **6301** (Stammdaten), **6302** (Anforderung), **6310** (Ergebnisse).
+
+**2.x vs 3.x (kurz):** In 3.x steht die Satzlänge in Feld `8004` (statt `8100`), die Version in `9218` ist `03.00`/`03.10`, Feldlängen sind variabel, und u. a. `3618`/`3619` (Mobil/E-Mail) sowie getrennte PLZ/Ort (`3112`/`3113`) sind üblich.
 
 ## Lokal starten
 
