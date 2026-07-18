@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="GDT-Dateien im Browser hochladen und lesen – ohne Server, Daten bleiben lokal." />
+  <title>GDT Viewer – Gerätedatentransfer lesen</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d9488'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='14' font-family='system-ui' font-weight='700'%3EGDT%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">GDT</span>
+        <div>
+          <h1>GDT Viewer</h1>
+          <p class="tagline">Gerätedatentransfer-Dateien hochladen und lesen</p>
+        </div>
+      </div>
+      <p class="privacy-badge" title="Dateien werden nur in deinem Browser gelesen">
+        <span class="dot"></span>
+        100 % lokal – nichts wird hochgeladen
+      </p>
+    </header>
+
+    <main>
+      <section
+        id="dropzone"
+        class="dropzone"
+        tabindex="0"
+        role="button"
+        aria-label="GDT-Datei auswählen oder hierher ziehen"
+      >
+        <div class="dropzone-inner">
+          <div class="drop-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 16V4M12 4l-4 4M12 4l4 4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="drop-title">GDT-Datei hierher ziehen</p>
+          <p class="drop-sub">oder klicken zum Auswählen · .gdt / .txt</p>
+          <button type="button" class="btn btn-primary" id="browseBtn">Datei wählen</button>
+          <input type="file" id="fileInput" accept=".gdt,.txt,text/plain" hidden />
+        </div>
+      </section>
+
+      <section id="toolbar" class="toolbar hidden">
+        <div class="file-meta">
+          <strong id="fileName">—</strong>
+          <span id="fileInfo" class="muted"></span>
+        </div>
+        <div class="toolbar-actions">
+          <label class="toggle">
+            <input type="checkbox" id="showRaw" />
+            Rohtext anzeigen
+          </label>
+          <button type="button" class="btn btn-ghost" id="copyBtn">Kopieren</button>
+          <button type="button" class="btn btn-ghost" id="clearBtn">Neue Datei</button>
+        </div>
+      </section>
+
+      <section id="summary" class="summary hidden"></section>
+
+      <section id="results" class="results hidden">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th class="col-line">Zeile</th>
+                <th class="col-id">Feld</th>
+                <th class="col-label">Bedeutung</th>
+                <th class="col-value">Inhalt</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="raw" class="raw hidden">
+        <h2>Rohtext</h2>
+        <pre id="rawText"></pre>
+      </section>
+
+      <section id="error" class="error hidden" role="alert"></section>
+
+      <section class="help">
+        <h2>Hinweise</h2>
+        <ul>
+          <li>Unterstützt typische GDT 2.x-Zeilen: <code>Länge (3) + Feld-ID (4) + Inhalt</code></li>
+          <li>Die Datei bleibt in deinem Browser – es gibt keinen Server-Upload</li>
+          <li>Patientendaten nicht unnötig teilen; die Seite ist öffentlich nutzbar</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Open Source · läuft komplett im Browser</span>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
