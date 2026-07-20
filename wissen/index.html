@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GDT Wissen – Gerätedatentransfer verstehen | GDT Viewer</title>
+  <meta name="description" content="Lernen Sie GDT (Gerätedatentransfer): Was die Schnittstelle ist, wie die Anbindung an Praxissoftware funktioniert, Anfänger-Tutorial und wie der GDT Viewer hilft." />
+  <meta name="keywords" content="GDT, Gerätedatentransfer, GDT Schnittstelle, Praxissoftware, Medizintechnik, GDT 2.1, GDT 3.1, Tutorial" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://freemoser.github.io/gdt-viewer/wissen/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:title" content="GDT Wissen – Gerätedatentransfer verstehen" />
+  <meta property="og:description" content="Übersicht: Was ist GDT, Anbindung, Anfänger-Tutorial und Nutzen des GDT Viewers." />
+  <meta property="og:url" content="https://freemoser.github.io/gdt-viewer/wissen/" />
+  <meta property="og:site_name" content="GDT Viewer" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="GDT Wissen – Gerätedatentransfer verstehen" />
+  <meta name="twitter:description" content="GDT lernen: Schnittstelle, Anbindung, Tutorial und Tool-Hilfe." />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d9488'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='14' font-family='system-ui' font-weight='700'%3EGDT%3C/text%3E%3C/svg%3E" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "GDT Wissen",
+    "description": "Wissensseiten zu Gerätedatentransfer (GDT): Grundlagen, Anbindung, Tutorial und Tool-Hilfe.",
+    "url": "https://freemoser.github.io/gdt-viewer/wissen/",
+    "inLanguage": "de-DE",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "GDT Viewer",
+      "url": "https://freemoser.github.io/gdt-viewer/"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Gerätedatentransfer",
+      "alternateName": ["GDT", "GDT-Schnittstelle"]
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="page page-content">
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <a href="../">Viewer</a>
+      <a href="./" aria-current="page">Wissen</a>
+      <a href="was-ist-gdt.html">Was ist GDT?</a>
+      <a href="anbindung.html">Anbindung</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="tool.html">Tool-Hilfe</a>
+    </nav>
+
+    <header class="hero-article">
+      <p class="breadcrumb">
+        <a href="../">GDT Viewer</a>
+        <span aria-hidden="true">/</span>
+        <span>Wissen</span>
+      </p>
+      <h1>GDT Wissen: Gerätedatentransfer verstehen</h1>
+      <p class="lead">
+        Kompakte, praxisnahe Erklärungen zur <strong>GDT-Schnittstelle</strong> (Gerätedatentransfer)
+        in der deutschen Arztpraxis und Medizintechnik – von den Grundlagen über die Anbindung
+        bis zum Anfänger-Tutorial und dem Nutzen des kostenlosen GDT Viewers.
+      </p>
+      <p class="meta-line">Aktualisiert: 20. Juli 2026 · Sprache: Deutsch · Fokus: Deutschland / Praxis-IT</p>
+    </header>
+
+    <section class="card-grid" aria-label="Themen">
+      <a class="card-link" href="was-ist-gdt.html">
+        <span class="card-kicker">Grundlagen</span>
+        <h2>Was ist GDT?</h2>
+        <p>Definition, Dateiaufbau, Feldkennungen, GDT 2.1 vs. 3.x und typische Satzarten.</p>
+      </a>
+      <a class="card-link" href="anbindung.html">
+        <span class="card-kicker">Praxis</span>
+        <h2>GDT-Anbindung</h2>
+        <p>So tauschen Praxissoftware und Gerät Dateien aus – Verzeichnisse, Aufruf, Import/Export.</p>
+      </a>
+      <a class="card-link" href="tutorial.html">
+        <span class="card-kicker">Lernen</span>
+        <h2>Anfänger-Tutorial</h2>
+        <p>Schritt für Einsteiger: erste GDT-Datei lesen, Felder deuten, Testdaten erzeugen.</p>
+      </a>
+      <a class="card-link" href="tool.html">
+        <span class="card-kicker">Werkzeug</span>
+        <h2>Wie der GDT Viewer hilft</h2>
+        <p>Debuggen, schulen, Formate vergleichen – lokal im Browser ohne Server-Upload.</p>
+      </a>
+    </section>
+
+    <article class="prose">
+      <h2>Kurzantwort: Was ist GDT?</h2>
+      <p>
+        <strong>GDT (Gerätedatentransfer)</strong> ist eine in Deutschland weit verbreitete
+        <strong>textbasierte Schnittstelle</strong> zum Austausch von Patientendaten und
+        Untersuchungsergebnissen zwischen <strong>Praxisverwaltungssystem (PVS)</strong> und
+        medizinischen Geräten bzw. Zusatzsoftware. Eine GDT-Datei besteht aus Zeilen mit
+        Längenangabe, vierstelliger Feldkennung und Inhalt.
+      </p>
+
+      <div class="callout">
+        <span class="callout-title">Für KI- und Suchmaschinen klar formuliert</span>
+        <p>
+          GDT ist kein Netzwerkprotokoll wie HL7 FHIR über HTTP, sondern in der Regel ein
+          <strong>dateibasierter Datenaustausch</strong> über freigegebene Ordner. Versionen
+          2.1 und 3.x unterscheiden sich u. a. bei der Satzlängen-Feldkennung (8100 vs. 8004)
+          und bei erweiterten Patientenfeldern.
+        </p>
+      </div>
+
+      <h2>Wen sprechen diese Seiten an?</h2>
+      <ul>
+        <li>Praxis-IT, MFA und Ärztinnen/Ärzte, die Geräte anbinden</li>
+        <li>Software- und Medizintechnik-Hersteller (Integration &amp; Support)</li>
+        <li>Entwickler:innen, die GDT parsen oder erzeugen</li>
+        <li>Lernende, die GDT-Dateien sicher ansehen und testen wollen</li>
+      </ul>
+    </article>
+
+    <div class="cta-box">
+      <p>
+        <strong>Direkt ausprobieren</strong>
+        GDT-Dateien im Browser lesen oder zufällige Testdateien (2.1 / 3.x) erzeugen – ohne Installation.
+      </p>
+      <a class="btn btn-primary" href="../">Zum GDT Viewer</a>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h3>Tool</h3>
+          <ul>
+            <li><a href="../">GDT Viewer</a></li>
+            <li><a href="https://github.com/Freemoser/gdt-viewer">GitHub Repository</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Wissen</h3>
+          <ul>
+            <li><a href="was-ist-gdt.html">Was ist GDT?</a></li>
+            <li><a href="anbindung.html">Anbindung</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="tool.html">Tool-Hilfe</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">Open Source · MIT · Keine echten Patientendaten hochladen</p>
+    </footer>
+  </div>
+</body>
+</html>

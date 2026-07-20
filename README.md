@@ -1,59 +1,80 @@
 # GDT Viewer
 
-Einfache Website zum **Hochladen und Lesen von GDT-Dateien** (Gerätedatentransfer) im Browser.
+**Kostenloser Online-Viewer und Generator für GDT-Dateien** (Gerätedatentransfer) – die gängige Schnittstelle zwischen Praxissoftware und medizinischen Geräten in Deutschland.
 
-## Features
+**Live:** [https://freemoser.github.io/gdt-viewer/](https://freemoser.github.io/gdt-viewer/)  
+**Wissen:** [Was ist GDT?](https://freemoser.github.io/gdt-viewer/wissen/was-ist-gdt.html) · [Anbindung](https://freemoser.github.io/gdt-viewer/wissen/anbindung.html) · [Tutorial](https://freemoser.github.io/gdt-viewer/wissen/tutorial.html) · [Tool-Hilfe](https://freemoser.github.io/gdt-viewer/wissen/tool.html)
 
-- Drag & Drop oder Dateiauswahl (`.gdt` / `.txt`)
-- Anzeige als Tabelle (Feld-ID, Bedeutung, Inhalt)
-- Kurze Zusammenfassung (Patient, Geburtsdatum, …)
-- Rohtext optional
-- **Zufällige GDT erzeugen** in mehreren konformen Formaten (Download als `.gdt`)
-- **100 % clientseitig** – Dateien werden nicht auf einen Server geladen
+---
 
-### Generator-Formate
+## Was macht dieses Projekt?
 
-| Format | Beschreibung |
-|--------|--------------|
-| GDT 2.1 CRLF / LF / UTF-8 | Satzlänge Feld **8100**, Version `02.10` |
-| GDT 3.0 CRLF | Satzlänge Feld **8004**, Version `03.00` |
-| GDT 3.1 CRLF / LF / UTF-8 | **8004**, `03.10`, E-Mail/Mobil, `6200` als YYYYMMDD |
-| GDT 3.1 Mehrere Sätze | 6301 + 6310 mit 3.1-Feldern |
-| Ohne Längenpräfix | nur Feld-ID + Inhalt |
-| GDT 2.1 Mehrere Sätze | 6301 + 6310 |
-| Ohne Feld 8100 | ohne optionale Satzlänge (2.1) |
+| Funktion | Beschreibung |
+|----------|----------------|
+| **GDT lesen** | Drag & Drop / Dateiauswahl – Anzeige als Tabelle mit Feldbedeutungen |
+| **Zusammenfassung** | Patient, Geburtsdatum, Satzart, GDT-Version auf einen Blick |
+| **Generator** | Zufällige, konforme Testdateien (GDT **2.1** und **3.0/3.1**) |
+| **Download** | Erzeugte oder geladene Datei als `.gdt` speichern |
+| **Datenschutz** | **100 % clientseitig** – Dateiinhalte werden nicht auf einen Server geladen |
 
-Satzarten: **6301** (Stammdaten), **6302** (Anforderung), **6310** (Ergebnisse).
+Ideal für **Praxis-IT**, **Support**, **Medizintechnik**, **Entwicklung** und **Schulungen**.
 
-**2.x vs 3.x (kurz):** In 3.x steht die Satzlänge in Feld `8004` (statt `8100`), die Version in `9218` ist `03.00`/`03.10`, Feldlängen sind variabel, und u. a. `3618`/`3619` (Mobil/E-Mail) sowie getrennte PLZ/Ort (`3112`/`3113`) sind üblich.
+---
 
-## Lokal starten
+## Features im Überblick
 
-Beliebigen statischen Server nutzen, z. B.:
+- Drag & Drop für `.gdt` / `.txt`
+- Feldtabelle (ID, Bedeutung, Inhalt) + optionaler Rohtext
+- Generator-Formate: GDT 2.1 (CRLF/LF/UTF-8), GDT 3.0, GDT 3.1, Multi-Satz, ohne Längenpräfix, ohne 8100
+- Satzarten: **6301**, **6302**, **6310**
+- Wissensseiten: Grundlagen, Anbindung PVS↔Gerät, Anfänger-Tutorial, Tool-Nutzen
+- SEO/GEO-taugliche Unterseiten (Meta, Canonical, JSON-LD, Sitemap)
+
+### 2.x vs. 3.x (kurz)
+
+| | GDT 2.1 | GDT 3.0 / 3.1 |
+|--|---------|----------------|
+| Version (`9218`) | `02.10` | `03.00` / `03.10` |
+| Satzlänge | Feld **8100** | Feld **8004** |
+| Extras | oft strengere Längen | variable IDs, Mobil/E-Mail, `6200` als YYYYMMDD |
+
+---
+
+## Schnellstart (lokal)
 
 ```bash
+git clone https://github.com/Freemoser/gdt-viewer.git
 cd gdt-viewer
 python3 -m http.server 8080
 ```
 
-Dann im Browser: <http://localhost:8080>
+Browser: [http://localhost:8080](http://localhost:8080)
 
-Oder einfach `index.html` öffnen (manche Browser schränken `file://` leicht ein – Server ist zuverlässiger).
+---
 
-## Online (GitHub Pages)
+## Wissensportal
 
-Nach dem Push ins öffentliche Repo:
+| Seite | Inhalt |
+|-------|--------|
+| [Wissen](https://freemoser.github.io/gdt-viewer/wissen/) | Übersicht |
+| [Was ist GDT?](https://freemoser.github.io/gdt-viewer/wissen/was-ist-gdt.html) | Definition, Dateiaufbau, Felder, Versionen |
+| [Anbindung](https://freemoser.github.io/gdt-viewer/wissen/anbindung.html) | PVS und Gerät, Ordner, Checkliste, Fehler |
+| [Tutorial](https://freemoser.github.io/gdt-viewer/wissen/tutorial.html) | Anfänger in ~15 Minuten |
+| [Tool-Hilfe](https://freemoser.github.io/gdt-viewer/wissen/tool.html) | Debugging, Schulung, Testdaten |
 
-1. Repo → **Settings** → **Pages**
-2. Source: **Deploy from a branch**
-3. Branch: `main` / Folder: `/ (root)`
-4. Speichern – die Seite ist unter  
-   `https://<user>.github.io/gdt-viewer/` erreichbar
+---
 
-## Hinweis Datenschutz
+## Tech
 
-GDT-Dateien können Patientendaten enthalten. Die App speichert und überträgt nichts – trotzdem nur mit Dateien arbeiten, die du freigeben darfst.
+- Statisches HTML/CSS/JS (kein Backend)
+- Hosting: GitHub Pages
+- Lizenz: **MIT**
 
-## Lizenz
+## Hinweis
 
-MIT
+GDT-Dateien können Patientendaten enthalten. Nur mit freigegebenen bzw. fiktiven Daten arbeiten. Dieses Tool ist **kein Medizinprodukt**.
+
+## Repository
+
+- **Homepage:** https://freemoser.github.io/gdt-viewer/
+- **Issues / Code:** https://github.com/Freemoser/gdt-viewer

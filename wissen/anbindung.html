@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GDT-Anbindung: Praxissoftware und Gerät verbinden | GDT Viewer</title>
+  <meta name="description" content="So funktioniert die GDT-Anbindung: Export- und Importordner, Programmstart, Satzarten 6302/6310, typische Fehler und Checkliste für Praxissoftware und Medizintechnik." />
+  <meta name="keywords" content="GDT Anbindung, GDT Schnittstelle Praxissoftware, GDT Import Export, Gerät an PVS anbinden, GDT Verzeichnis, GDT Fehler" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://freemoser.github.io/gdt-viewer/wissen/anbindung.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:title" content="GDT-Anbindung: Praxissoftware und Gerät verbinden" />
+  <meta property="og:description" content="Ablauf der GDT-Schnittstelle zwischen PVS und Gerät – Verzeichnisse, Aufruf, Import und typische Stolpersteine." />
+  <meta property="og:url" content="https://freemoser.github.io/gdt-viewer/wissen/anbindung.html" />
+  <meta property="og:site_name" content="GDT Viewer" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d9488'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='14' font-family='system-ui' font-weight='700'%3EGDT%3C/text%3E%3C/svg%3E" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "GDT-Anbindung: Praxissoftware und Gerät verbinden",
+    "description": "Ablauf und Checkliste für die GDT-Schnittstelle zwischen Praxisverwaltung und medizinischem Gerät.",
+    "inLanguage": "de-DE",
+    "dateModified": "2026-07-20",
+    "author": { "@type": "Organization", "name": "GDT Viewer" },
+    "mainEntityOfPage": "https://freemoser.github.io/gdt-viewer/wissen/anbindung.html"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "GDT-Anbindung einrichten (Überblick)",
+    "description": "Grundschritte, um Praxissoftware und Gerät über GDT-Dateien zu verbinden.",
+    "inLanguage": "de-DE",
+    "step": [
+      { "@type": "HowToStep", "name": "Übergabeverzeichnis festlegen", "text": "Gemeinsamen Export- und Importordner definieren, auf den PVS und Gerät zugreifen können." },
+      { "@type": "HowToStep", "name": "Dateinamen und Satzarten abstimmen", "text": "Klären, welche Dateinamen und Satzarten (z. B. 6302 Anforderung, 6310 Ergebnis) verwendet werden." },
+      { "@type": "HowToStep", "name": "Externes Modul konfigurieren", "text": "Im PVS den Programmaufruf des Geräts/Moduls mit Pfad zur GDT-Datei hinterlegen." },
+      { "@type": "HowToStep", "name": "Testdaten prüfen", "text": "Mit fiktiven Patientendaten testen und die erzeugte GDT-Datei im Viewer kontrollieren." }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page page-content">
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <a href="../">Viewer</a>
+      <a href="./">Wissen</a>
+      <a href="was-ist-gdt.html">Was ist GDT?</a>
+      <a href="anbindung.html" aria-current="page">Anbindung</a>
+      <a href="tutorial.html">Tutorial</a>
+      <a href="tool.html">Tool-Hilfe</a>
+    </nav>
+
+    <header class="hero-article">
+      <p class="breadcrumb">
+        <a href="../">GDT Viewer</a>
+        <span aria-hidden="true">/</span>
+        <a href="./">Wissen</a>
+        <span aria-hidden="true">/</span>
+        <span>Anbindung</span>
+      </p>
+      <h1>GDT-Anbindung: So funktioniert der Datenaustausch</h1>
+      <p class="lead">
+        Die <strong>GDT-Anbindung</strong> verbindet Praxisverwaltungssystem (PVS) und
+        medizinisches Gerät über Dateien. Hier erfahren Sie den typischen Ablauf,
+        was konfiguriert werden muss und wo Fehler entstehen – inklusive Checkliste.
+      </p>
+      <p class="meta-line">Aktualisiert: 20. Juli 2026 · Für Praxis-IT und Integratoren in Deutschland</p>
+    </header>
+
+    <nav class="toc" aria-label="Inhaltsverzeichnis">
+      <p class="toc-title">Inhalt</p>
+      <ol>
+        <li><a href="#prinzip">Grundprinzip</a></li>
+        <li><a href="#ablauf">Typischer Ablauf</a></li>
+        <li><a href="#konfiguration">Was konfiguriert wird</a></li>
+        <li><a href="#checkliste">Checkliste</a></li>
+        <li><a href="#fehler">Häufige Fehler</a></li>
+      </ol>
+    </nav>
+
+    <article class="prose">
+      <h2 id="prinzip">Grundprinzip der GDT-Schnittstelle</h2>
+      <p>
+        Im Gegensatz zu vielen Cloud-APIs ist GDT in der Praxis meist
+        <strong>ordnerbasiert</strong>: Beide Systeme kennen dieselben Pfade
+        (oder getrennte Import-/Exportordner). Die Kommunikation läuft über
+        <strong>Schreiben und Lesen von GDT-Dateien</strong>, oft gekoppelt mit dem
+        Start eines externen Programms aus dem PVS heraus.
+      </p>
+      <div class="callout">
+        <span class="callout-title">Kernidee</span>
+        <p>
+          PVS legt Anforderungsdatei ab → Gerät/Modul startet und liest → Messung →
+          Ergebnisdatei wird geschrieben → PVS importiert zurück in die Karteikarte.
+        </p>
+      </div>
+
+      <h2 id="ablauf">Typischer Ablauf (Anforderung → Ergebnis)</h2>
+      <ol>
+        <li>
+          <strong>Patient im PVS auswählen</strong> und externes Modul / Gerät aufrufen.
+        </li>
+        <li>
+          Das PVS erzeugt eine GDT-Datei – oft Satzart <code>6302</code>
+          (Untersuchungsanforderung) mit Patientenfeldern (<code>3000</code>, <code>3101</code>, …).
+        </li>
+        <li>
+          Die Datei liegt in einem <strong>Export- bzw. Übergabeverzeichnis</strong>;
+          der Programmaufruf übergibt oft den vollen Dateipfad als Parameter.
+        </li>
+        <li>
+          Das Gerät liest die Datei, führt die Untersuchung durch und schreibt
+          Ergebnisse (häufig Satzart <code>6310</code>) in den <strong>Importordner</strong>.
+        </li>
+        <li>
+          Das PVS importiert die Ergebnisdatei und ordnet sie dem Patienten zu
+          (über Patienten-ID und/oder Workflow-Kontext).
+        </li>
+      </ol>
+      <p>
+        Varianten: reine Stammdatenübergabe (<code>6301</code>), mehrere Sätze in einer Datei,
+        unterschiedliche Dateinamen pro Hersteller, Polling des Importordners statt
+        sofortigem Import.
+      </p>
+
+      <h2 id="konfiguration">Was in der Anbindung konfiguriert wird</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Einstellung</th>
+            <th>Warum sie wichtig ist</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Exportpfad (PVS → Gerät)</td>
+            <td>Wo die Anforderungsdatei landet</td>
+          </tr>
+          <tr>
+            <td>Importpfad (Gerät → PVS)</td>
+            <td>Wo Ergebnisse erwartet werden</td>
+          </tr>
+          <tr>
+            <td>Dateiname / Muster</td>
+            <td>Muss auf beiden Seiten übereinstimmen</td>
+          </tr>
+          <tr>
+            <td>GDT-Version 2.1 oder 3.x</td>
+            <td>Andere Feldlängen-Felder (8100 vs. 8004), optionale Felder</td>
+          </tr>
+          <tr>
+            <td>Programmpfad + Parameter</td>
+            <td>Start des Gerätemoduls, oft mit <code>/load:</code> o. Ä. und Dateipfad</td>
+          </tr>
+          <tr>
+            <td>Zeichensatz</td>
+            <td>Umlaute (ISO-8859-1 / Windows-1252 / UTF-8)</td>
+          </tr>
+          <tr>
+            <td>Sender-/Empfänger-IDs</td>
+            <td>Felder <code>8315</code> / <code>8316</code> – je nach Gerät Pflicht</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Die genauen Dialoge unterscheiden sich je PVS (z. B. „Externes Modul“,
+        „Geräteschnittstelle“, „GDT-Konfiguration“). Die Spezifikation des
+        Geräteherstellers hat Vorrang vor generischen Annahmen.
+      </p>
+
+      <h2 id="checkliste">Checkliste vor dem Produktivstart</h2>
+      <ul>
+        <li>Beide Seiten nutzen denselben freigegebenen Ordner bzw. abgestimmte Pfade</li>
+        <li>Schreib- und Leserechte für den Praxis-Windows-Benutzer sind gesetzt</li>
+        <li>Test mit <strong>fiktiven</strong> Patientendaten, nicht mit echten Produktivdaten zuerst</li>
+        <li>Anforderungsdatei im <a href="../">GDT Viewer</a> geöffnet: Satzart, Patient, Version plausibel?</li>
+        <li>Ergebnisdatei enthält erwartete Messfelder (<code>8410</code>/<code>8420</code>) und Patienten-ID</li>
+        <li>Zeichensatz: Umlaute in Namen korrekt?</li>
+        <li>GDT 2.1 vs. 3.x: Stimmt die Version mit der Geräte-Doku überein?</li>
+        <li>Datenschutz: Ordner nicht unnötig freigegeben; Backup- und Löschregeln klären</li>
+      </ul>
+
+      <h2 id="fehler">Häufige Fehler bei der GDT-Anbindung</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Symptom</th>
+            <th>Mögliche Ursache</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gerät startet ohne Patient</td>
+            <td>Falscher Parameter, leere/ungültige GDT-Datei, falscher Pfad</td>
+          </tr>
+          <tr>
+            <td>Ergebnis erscheint nicht im PVS</td>
+            <td>Importordner falsch, Dateiname, Import nicht ausgelöst, falsche Patienten-ID</td>
+          </tr>
+          <tr>
+            <td>Umlaute kaputt</td>
+            <td>Zeichensatz-Mismatch (Feld <code>9206</code> / Encoding der Datei)</td>
+          </tr>
+          <tr>
+            <td>Parser meldet Längenfehler</td>
+            <td>Falsche 3-stellige Zeilenlänge, gemischte CRLF/LF, manuell editierte Datei</td>
+          </tr>
+          <tr>
+            <td>Version abgelehnt</td>
+            <td>Gerät erwartet 02.10, PVS sendet 03.10 (oder umgekehrt)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Zum Debuggen eignet sich der Viewer besonders gut: Datei öffnen, Felder prüfen,
+        mit dem Generator eine <a href="tool.html">kontrollierte Testdatei</a> erzeugen und
+        den Import testen. Grundlagen der Felder:
+        <a href="was-ist-gdt.html">Was ist GDT?</a>
+      </p>
+    </article>
+
+    <div class="cta-box">
+      <p>
+        <strong>Anbindungsdatei prüfen</strong>
+        Export aus dem PVS im Viewer öffnen – Satzart, Version und Patientenfelder auf einen Blick.
+      </p>
+      <a class="btn btn-primary" href="../">Zum GDT Viewer</a>
+    </div>
+
+    <section class="related">
+      <h2>Weiterlesen</h2>
+      <div class="card-grid">
+        <a class="card-link" href="was-ist-gdt.html"><h3>Was ist GDT?</h3><p>Dateiaufbau und Versionen.</p></a>
+        <a class="card-link" href="tutorial.html"><h3>Tutorial</h3><p>Schritt für Einsteiger.</p></a>
+        <a class="card-link" href="tool.html"><h3>Tool-Hilfe</h3><p>Debug- und Schulungsszenarien.</p></a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h3>Tool</h3>
+          <ul>
+            <li><a href="../">GDT Viewer</a></li>
+            <li><a href="https://github.com/Freemoser/gdt-viewer">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Wissen</h3>
+          <ul>
+            <li><a href="./">Übersicht</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li><a href="tool.html">Tool-Hilfe</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">Allgemeine Informationen – herstellerspezifische Doku hat Vorrang</p>
+    </footer>
+  </div>
+</body>
+</html>

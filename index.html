@@ -3,19 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="GDT-Dateien im Browser hochladen und lesen – ohne Server, Daten bleiben lokal." />
-  <title>GDT Viewer – Gerätedatentransfer lesen</title>
+  <title>GDT Viewer – GDT-Dateien online lesen &amp; Testdaten erzeugen (2.1 / 3.x)</title>
+  <meta name="description" content="Kostenloser GDT Viewer: Gerätedatentransfer-Dateien im Browser lesen, Felder verstehen und konforme GDT 2.1 / 3.x Testdaten erzeugen. 100 % lokal – kein Server-Upload." />
+  <meta name="keywords" content="GDT Viewer, GDT Datei lesen, Gerätedatentransfer, GDT online, GDT Generator, GDT 2.1, GDT 3.1, GDT Parser" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="GDT Viewer" />
+  <link rel="canonical" href="https://freemoser.github.io/gdt-viewer/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:title" content="GDT Viewer – GDT-Dateien lesen &amp; erzeugen" />
+  <meta property="og:description" content="Gerätedatentransfer im Browser: Dateien anzeigen, Felder deuten, Testdaten für GDT 2.1 und 3.x erzeugen – ohne Upload auf einen Server." />
+  <meta property="og:url" content="https://freemoser.github.io/gdt-viewer/" />
+  <meta property="og:site_name" content="GDT Viewer" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="GDT Viewer – GDT online lesen &amp; erzeugen" />
+  <meta name="twitter:description" content="Kostenloser Browser-Viewer und Generator für Gerätedatentransfer (GDT 2.1 / 3.x)." />
+  <meta name="geo.region" content="DE" />
+  <meta name="language" content="German" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d9488'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='14' font-family='system-ui' font-weight='700'%3EGDT%3C/text%3E%3C/svg%3E" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "GDT Viewer",
+    "alternateName": ["GDT Online Viewer", "Gerätedatentransfer Viewer"],
+    "url": "https://freemoser.github.io/gdt-viewer/",
+    "description": "Kostenloser Online-Viewer und Generator für GDT-Dateien (Gerätedatentransfer). Unterstützt GDT 2.1 und 3.x, verarbeitet Dateien lokal im Browser.",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "inLanguage": "de-DE",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "featureList": [
+      "GDT-Dateien per Drag-and-Drop lesen",
+      "Feldtabelle mit Bedeutungen",
+      "Zufällige GDT 2.1 und 3.x Testdateien",
+      "Download als .gdt",
+      "Keine Server-Speicherung der Dateiinhalte"
+    ],
+    "about": {
+      "@type": "Thing",
+      "name": "Gerätedatentransfer",
+      "alternateName": "GDT"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "GDT Viewer",
+    "url": "https://freemoser.github.io/gdt-viewer/",
+    "inLanguage": "de-DE",
+    "description": "GDT Viewer und Wissensportal zum Gerätedatentransfer für Praxissoftware und Medizintechnik in Deutschland.",
+    "publisher": { "@type": "Organization", "name": "GDT Viewer", "url": "https://github.com/Freemoser/gdt-viewer" }
+  }
+  </script>
 </head>
 <body>
   <div class="page">
-    <header class="header">
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <a href="./" aria-current="page">Viewer</a>
+      <a href="wissen/">Wissen</a>
+      <a href="wissen/was-ist-gdt.html">Was ist GDT?</a>
+      <a href="wissen/anbindung.html">Anbindung</a>
+      <a href="wissen/tutorial.html">Tutorial</a>
+      <a href="wissen/tool.html">Tool-Hilfe</a>
+    </nav>
+
+    <header class="header header-top">
       <div class="brand">
         <span class="logo" aria-hidden="true">GDT</span>
         <div>
           <h1>GDT Viewer</h1>
-          <p class="tagline">Gerätedatentransfer-Dateien hochladen und lesen</p>
+          <p class="tagline">Gerätedatentransfer-Dateien online lesen &amp; Testdaten erzeugen</p>
         </div>
       </div>
       <p class="privacy-badge" title="Dateien werden nur in deinem Browser gelesen">
@@ -28,7 +91,7 @@
       <section class="generator" aria-labelledby="gen-title">
         <div class="generator-head">
           <h2 id="gen-title">Zufällige GDT erzeugen</h2>
-          <p class="muted">Konforme Testdateien in verschiedenen Formaten – fiktive Patientendaten</p>
+          <p class="muted">Konforme Testdateien (GDT 2.1 &amp; 3.x) – fiktive Patientendaten</p>
         </div>
         <div class="generator-controls">
           <label class="field">
@@ -117,10 +180,47 @@
           <li>Nur Testdaten erzeugen; echte Patientendaten nicht unnötig teilen</li>
         </ul>
       </section>
+
+      <section class="help" style="margin-top:1rem" aria-labelledby="wissen-teaser">
+        <h2 id="wissen-teaser">GDT lernen</h2>
+        <ul>
+          <li><a href="wissen/was-ist-gdt.html" style="color:var(--accent-hover)">Was ist GDT?</a> – Definition, Aufbau, 2.1 vs. 3.x</li>
+          <li><a href="wissen/anbindung.html" style="color:var(--accent-hover)">GDT-Anbindung</a> – PVS und Gerät verbinden</li>
+          <li><a href="wissen/tutorial.html" style="color:var(--accent-hover)">Anfänger-Tutorial</a> – erste Datei in 15 Minuten</li>
+          <li><a href="wissen/tool.html" style="color:var(--accent-hover)">Wie das Tool hilft</a> – Debugging, Schulung, Tests</li>
+        </ul>
+      </section>
     </main>
 
-    <footer class="footer">
-      <span>Open Source · läuft komplett im Browser</span>
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h3>Tool</h3>
+          <ul>
+            <li><a href="./">GDT Viewer</a></li>
+            <li><a href="https://github.com/Freemoser/gdt-viewer">GitHub Repository</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Wissen</h3>
+          <ul>
+            <li><a href="wissen/">Übersicht</a></li>
+            <li><a href="wissen/was-ist-gdt.html">Was ist GDT?</a></li>
+            <li><a href="wissen/anbindung.html">Anbindung</a></li>
+            <li><a href="wissen/tutorial.html">Tutorial</a></li>
+            <li><a href="wissen/tool.html">Tool-Hilfe</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Rechtliches</h3>
+          <ul>
+            <li>Kein Medizinprodukt · nur Hilfswerkzeug</li>
+            <li>Dateiinhalte bleiben im Browser</li>
+            <li>Lizenz: MIT</li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">Open Source · GDT Viewer für Praxis-IT &amp; Medizintechnik in Deutschland</p>
     </footer>
   </div>
   <script src="generator.js"></script>

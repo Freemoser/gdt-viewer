@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GDT Tutorial für Anfänger: Erste Datei lesen &amp; verstehen | GDT Viewer</title>
+  <meta name="description" content="GDT Anfänger-Tutorial: Erste GDT-Datei im Browser öffnen, Felder deuten, Testdaten erzeugen und Unterschiede GDT 2.1 / 3.x kennenlernen – Schritt für Schritt." />
+  <meta name="keywords" content="GDT Tutorial, GDT lernen, GDT für Anfänger, GDT Datei lesen, GDT Beispiel, Gerätedatentransfer Tutorial" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://freemoser.github.io/gdt-viewer/wissen/tutorial.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:title" content="GDT Tutorial für Anfänger" />
+  <meta property="og:description" content="Schritt: GDT-Datei lesen, Felder verstehen und Testdaten erzeugen." />
+  <meta property="og:url" content="https://freemoser.github.io/gdt-viewer/wissen/tutorial.html" />
+  <meta property="og:site_name" content="GDT Viewer" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d9488'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='14' font-family='system-ui' font-weight='700'%3EGDT%3C/text%3E%3C/svg%3E" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "GDT für Anfänger: Erste Datei lesen und verstehen",
+    "description": "Schritt-Anleitung zum Lesen und Verstehen von GDT-Dateien mit dem GDT Viewer.",
+    "inLanguage": "de-DE",
+    "totalTime": "PT15M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "GDT Viewer öffnen",
+        "text": "Öffnen Sie https://freemoser.github.io/gdt-viewer/ im Browser. Es ist keine Installation nötig."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Testdatei erzeugen oder eigene Datei laden",
+        "text": "Nutzen Sie „Zufällig erzeugen“ für fiktive Daten oder ziehen Sie eine .gdt-Datei in den Upload-Bereich."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Zusammenfassung und Tabelle lesen",
+        "text": "Prüfen Sie Patient, Geburtsdatum, Satzart und GDT-Version in der Übersicht und die Feldkennungen in der Tabelle."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Rohtext und Download nutzen",
+        "text": "Optional Rohtext anzeigen und die Datei speichern, um Importtests in der Praxissoftware zu machen."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 5,
+        "name": "Formate vergleichen",
+        "text": "Erzeugen Sie GDT 2.1 und GDT 3.1 und vergleichen Sie die Felder 8100 vs. 8004 und die Version 9218."
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "GDT Tutorial für Anfänger",
+    "dateModified": "2026-07-20",
+    "inLanguage": "de-DE",
+    "author": { "@type": "Organization", "name": "GDT Viewer" },
+    "mainEntityOfPage": "https://freemoser.github.io/gdt-viewer/wissen/tutorial.html"
+  }
+  </script>
+</head>
+<body>
+  <div class="page page-content">
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <a href="../">Viewer</a>
+      <a href="./">Wissen</a>
+      <a href="was-ist-gdt.html">Was ist GDT?</a>
+      <a href="anbindung.html">Anbindung</a>
+      <a href="tutorial.html" aria-current="page">Tutorial</a>
+      <a href="tool.html">Tool-Hilfe</a>
+    </nav>
+
+    <header class="hero-article">
+      <p class="breadcrumb">
+        <a href="../">GDT Viewer</a>
+        <span aria-hidden="true">/</span>
+        <a href="./">Wissen</a>
+        <span aria-hidden="true">/</span>
+        <span>Tutorial</span>
+      </p>
+      <h1>GDT Tutorial für Anfänger</h1>
+      <p class="lead">
+        In etwa 15 Minuten verstehen Sie, wie eine <strong>GDT-Datei</strong> aussieht,
+        welche Felder wichtig sind und wie Sie mit dem kostenlosen
+        <strong>GDT Viewer</strong> sicher üben – ohne Installation und ohne Server-Upload.
+      </p>
+      <p class="meta-line">Aktualisiert: 20. Juli 2026 · Niveau: Einsteiger · Voraussetzungen: Browser</p>
+    </header>
+
+    <nav class="toc" aria-label="Inhaltsverzeichnis">
+      <p class="toc-title">Schritte</p>
+      <ol>
+        <li><a href="#schritt-1">Viewer öffnen</a></li>
+        <li><a href="#schritt-2">Testdatei erzeugen</a></li>
+        <li><a href="#schritt-3">Felder deuten</a></li>
+        <li><a href="#schritt-4">Eigene Datei laden</a></li>
+        <li><a href="#schritt-5">2.1 und 3.x vergleichen</a></li>
+        <li><a href="#uebung">Mini-Übung</a></li>
+      </ol>
+    </nav>
+
+    <article class="prose">
+      <div class="callout">
+        <span class="callout-title">Datenschutz zuerst</span>
+        <p>
+          Üben Sie mit <strong>fiktiven</strong> Daten. Echte GDT-Dateien enthalten
+          Patientendaten. Der Viewer verarbeitet Dateien nur lokal im Browser – trotzdem
+          keine sensiblen Dateien auf fremden Rechnern oder Screenshots teilen.
+        </p>
+      </div>
+
+      <h2 id="schritt-1">Schritt 1: GDT Viewer öffnen</h2>
+      <p>
+        Öffnen Sie den <a href="../">GDT Viewer</a> im Browser
+        (z. B. Chrome, Firefox, Edge, Safari). Es gibt nichts zu installieren.
+        Oben sehen Sie den Generator für Zufallsdateien, darunter den Bereich zum
+        Hochladen bzw. Ablegen einer Datei.
+      </p>
+
+      <h2 id="schritt-2">Schritt 2: Zufällige Testdatei erzeugen</h2>
+      <ol>
+        <li>Unter <strong>Format</strong> z. B. „GDT 2.1 (CRLF…)“ oder „Zufälliges Format“ wählen.</li>
+        <li>Auf <strong>Zufällig erzeugen</strong> klicken.</li>
+        <li>Sofort erscheinen Zusammenfassung und Tabelle mit allen Feldern.</li>
+        <li>Optional: <strong>Als .gdt speichern</strong> – z. B. für einen Importtest im PVS.</li>
+      </ol>
+      <p>
+        Die erzeugten Personen, Adressen und Messwerte sind erfunden. Ideal für Schulung
+        und Entwicklung.
+      </p>
+
+      <h2 id="schritt-3">Schritt 3: Felder richtig deuten</h2>
+      <p>Schauen Sie zuerst auf die <strong>Zusammenfassung</strong>:</p>
+      <ul>
+        <li><strong>Patient</strong> – aus Nachname (<code>3101</code>) und Vorname (<code>3102</code>)</li>
+        <li><strong>Satzart</strong> – Feld <code>8000</code> (z. B. 6301, 6302, 6310)</li>
+        <li><strong>GDT-Version</strong> – Feld <code>9218</code> (02.10 vs. 03.10)</li>
+        <li><strong>Untersuchungsdatum</strong> – <code>2002</code> oder <code>6200</code></li>
+      </ul>
+      <p>In der Tabelle bedeuten die Spalten:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Spalte</th>
+            <th>Bedeutung für Einsteiger</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Zeile</td>
+            <td>Position in der Datei (von oben)</td>
+          </tr>
+          <tr>
+            <td>Feld</td>
+            <td>Vierstellige Kennung laut GDT-Spezifikation</td>
+          </tr>
+          <tr>
+            <td>Bedeutung</td>
+            <td>Lesbare Erklärung (sofern bekannt)</td>
+          </tr>
+          <tr>
+            <td>Inhalt</td>
+            <td>Der konkrete Wert (Name, Zahl, Datum …)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Aktivieren Sie <strong>Rohtext anzeigen</strong>, um die Originalzeilen zu sehen –
+        so erkennen Sie Längenpräfix und Zeilenenden. Mehr Theorie:
+        <a href="was-ist-gdt.html">Was ist GDT?</a>
+      </p>
+
+      <h2 id="schritt-4">Schritt 4: Eigene GDT-Datei laden</h2>
+      <ol>
+        <li>Datei per Drag &amp; Drop auf die Fläche ziehen oder „Datei wählen“.</li>
+        <li>Formate: typisch <code>.gdt</code> oder <code>.txt</code>.</li>
+        <li>Prüfen: Stimmen Patient und Messwerte mit der Erwartung überein?</li>
+        <li>Bei Importproblemen im PVS: Version, Satzart und Patienten-ID notieren.</li>
+      </ol>
+      <p>
+        Für den Kontext „warum die Datei so heißt und wo sie liegt“ lesen Sie
+        <a href="anbindung.html">GDT-Anbindung</a>.
+      </p>
+
+      <h2 id="schritt-5">Schritt 5: GDT 2.1 und 3.x vergleichen</h2>
+      <p>Erzeugen Sie nacheinander zwei Dateien und vergleichen Sie:</p>
+      <ul>
+        <li><strong>2.1:</strong> Version <code>02.10</code>, Satzlänge oft Feld <code>8100</code></li>
+        <li><strong>3.1:</strong> Version <code>03.10</code>, Satzlänge Feld <code>8004</code>, oft E-Mail/Mobil</li>
+      </ul>
+      <p>
+        Dieses Wissen hilft, wenn ein Gerät „falsche Version“ meldet oder Felder
+        „zu lang / zu kurz“ moniert.
+      </p>
+
+      <h2 id="uebung">Mini-Übung (5 Minuten)</h2>
+      <ol>
+        <li>Erzeugen Sie eine Datei im Format <strong>GDT 3.1 (CRLF)</strong>.</li>
+        <li>Notieren Sie Satzart und ob Feld <code>8004</code> vorkommt.</li>
+        <li>Erzeugen Sie danach <strong>GDT 2.1</strong> und suchen Sie Feld <code>8100</code>.</li>
+        <li>Laden Sie die Datei erneut nach Download – Inhalt muss gleich lesbar sein.</li>
+      </ol>
+      <p>
+        Wenn Sie das beherrschen, können Sie Support-Fälle und Anbindungen deutlich
+        schneller eingrenzen. Einsatzszenarien:
+        <a href="tool.html">Wie der GDT Viewer hilft</a>.
+      </p>
+    </article>
+
+    <div class="cta-box">
+      <p>
+        <strong>Tutorial starten</strong>
+        Jetzt eine Zufallsdatei erzeugen und die Tabelle durchgehen.
+      </p>
+      <a class="btn btn-primary" href="../">Zum GDT Viewer</a>
+    </div>
+
+    <section class="related">
+      <h2>Weiterlesen</h2>
+      <div class="card-grid">
+        <a class="card-link" href="was-ist-gdt.html"><h3>Was ist GDT?</h3><p>Begriffe und Dateiaufbau.</p></a>
+        <a class="card-link" href="anbindung.html"><h3>Anbindung</h3><p>PVS und Gerät verbinden.</p></a>
+        <a class="card-link" href="tool.html"><h3>Tool-Hilfe</h3><p>Für Support und Schulung.</p></a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="site-footer-grid">
+        <div>
+          <h3>Tool</h3>
+          <ul>
+            <li><a href="../">GDT Viewer</a></li>
+            <li><a href="https://github.com/Freemoser/gdt-viewer">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Wissen</h3>
+          <ul>
+            <li><a href="./">Übersicht</a></li>
+            <li><a href="anbindung.html">Anbindung</a></li>
+            <li><a href="tool.html">Tool-Hilfe</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="site-footer-note">Kostenlos · Open Source · 100 % clientseitig</p>
+    </footer>
+  </div>
+</body>
+</html>
